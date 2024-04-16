@@ -1,3 +1,4 @@
+using API.DTO;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
@@ -11,10 +12,10 @@ public class AutoMapperProfiles: Profile
         CreateMap<AppUser, MemberDto>()
             .ForMember(dest => dest.PhotoUrl, 
                 opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url))
-            // .ForMember(dest=> dest.Age, 
-            //     opt => opt.MapFrom(src => src.DameLaEdad()));
             .ForMember(dest=> dest.Age, 
                 opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
         CreateMap<Photo, PhotoDto>();
-    }
+        CreateMap<MemberUpdateDtos, AppUser>(); 
+        CreateMap<RegisterDto, AppUser>(); 
+        }
 }
