@@ -3,8 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { TimeagoModule } from 'ngx-timeago';
-import { Member } from 'src/app/_models/member';
+import { IMember } from 'src/app/_models/imember';
 import { MembersService } from 'src/app/_services/members.service';
 
 @Component({
@@ -12,10 +11,10 @@ import { MembersService } from 'src/app/_services/members.service';
   templateUrl: './member-detail.component.html',
   standalone: true,
   styleUrls: ['./member-detail.component.css'],
-  imports: [CommonModule, TabsModule, GalleryModule, TimeagoModule]
+  imports: [CommonModule, TabsModule, GalleryModule]
 })
 export class MemberDetailComponent implements OnInit{
-  member: Member|undefined;
+  member: IMember|undefined;
   images: GalleryItem[] = [];
 
   constructor(private membersService: MembersService,private route: ActivatedRoute) { }
@@ -39,6 +38,7 @@ export class MemberDetailComponent implements OnInit{
   getImages(){
     if(!this.member)return;
     for(const photo of this.member?.photos){
+      this.images.push(new ImageItem({src: photo?.url, thumb: photo?.url}));
       this.images.push(new ImageItem({src: photo?.url, thumb: photo?.url}));
     }
   }
